@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 namespace TPA.Reflection.Model
 {
@@ -22,7 +23,7 @@ namespace TPA.Reflection.Model
       m_BaseType = EmitExtends(type.BaseType);
       m_Properties = PropertyMetadata.EmitProperties(type.GetProperties());
       m_TypeKind = GetTypeKind(type);
-      m_Attributes = type.GetCustomAttributes(false).Cast<Attribute>();
+      m_Attributes = type.CustomAttributes;
     }
     #endregion
 
@@ -46,19 +47,19 @@ namespace TPA.Reflection.Model
 
     #region private
     //vars
-    private string m_typeName;
-    private string m_NamespaceName;
-    private TypeMetadata m_BaseType;
-    private IEnumerable<TypeMetadata> m_GenericArguments;
-    private Tuple<AccessLevel, SealedEnum, AbstractENum> m_Modifiers;
-    private TypeKind m_TypeKind;
-    private IEnumerable<Attribute> m_Attributes;
-    private IEnumerable<TypeMetadata> m_ImplementedInterfaces;
-    private IEnumerable<TypeMetadata> m_NestedTypes;
-    private IEnumerable<PropertyMetadata> m_Properties;
-    private TypeMetadata m_DeclaringType;
-    private IEnumerable<MethodMetadata> m_Methods;
-    private IEnumerable<MethodMetadata> m_Constructors;
+    internal string m_typeName;
+    internal string m_NamespaceName;
+    internal TypeMetadata m_BaseType;
+    internal IEnumerable<TypeMetadata> m_GenericArguments;
+    internal Tuple<AccessLevel, SealedEnum, AbstractENum> m_Modifiers;
+    internal TypeKind m_TypeKind;
+    internal IEnumerable<CustomAttributeData> m_Attributes;
+    internal IEnumerable<TypeMetadata> m_ImplementedInterfaces;
+    internal IEnumerable<TypeMetadata> m_NestedTypes;
+    internal IEnumerable<PropertyMetadata> m_Properties;
+    internal TypeMetadata m_DeclaringType;
+    internal IEnumerable<MethodMetadata> m_Methods;
+    internal IEnumerable<MethodMetadata> m_Constructors;
     //constructors
     private TypeMetadata(string typeName, string namespaceName)
     {

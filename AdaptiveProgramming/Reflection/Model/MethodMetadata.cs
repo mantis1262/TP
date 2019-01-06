@@ -19,12 +19,12 @@ namespace TPA.Reflection.Model
 
     #region private
     //vars
-    private string m_Name;
-    private IEnumerable<TypeMetadata> m_GenericArguments;
-    private Tuple<AccessLevel, AbstractENum, StaticEnum, VirtualEnum> m_Modifiers;
-    private TypeMetadata m_ReturnType;
-    private bool m_Extension;
-    private IEnumerable<ParameterMetadata> m_Parameters;
+    internal string m_Name;
+    internal IEnumerable<TypeMetadata> m_GenericArguments;
+    internal Tuple<AccessLevel, AbstractENum, StaticEnum, VirtualEnum> m_Modifiers;
+    internal TypeMetadata m_ReturnType;
+    internal bool m_Extension;
+    internal IEnumerable<ParameterMetadata> m_Parameters;
     //constructor
     private MethodMetadata(MethodBase method)
     {
@@ -50,7 +50,7 @@ namespace TPA.Reflection.Model
     }
     private static bool EmitExtension(MethodBase method)
     {
-      return method.IsDefined(typeof(ExtensionAttribute), true);
+      return method.CustomAttributes.Where<CustomAttributeData>(x => x.AttributeType == typeof(ExtensionAttribute)).Count<CustomAttributeData>() == 1;
     }
     private static Tuple<AccessLevel, AbstractENum, StaticEnum, VirtualEnum> EmitModifiers(MethodBase method)
     {
